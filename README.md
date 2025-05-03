@@ -1,64 +1,125 @@
 # GitHub PR Agent
 
-A powerful and intelligent agent for managing and automating GitHub Pull Requests. This tool helps streamline the code review process and enhance collaboration in software development teams.
 
-## Features
+A powerful and intelligent agent for managing and automating GitHub Pull Requests and Issues, built with [Motia](https://motia.dev). This tool helps streamline code review, automate issue management, and enhance collaboration in software development teams.
 
-- Automated PR analysis and review
-- Code quality checks
-- Dependency management
-- Custom workflow automation
+---
 
-## Prerequisites
+## 🚀 Quickstart (5 Minutes)
 
-- Node.js (v16 or higher)
-- Python 3.8+
-- pnpm (for package management)
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/swarna1101/github-pr-agent.git
+   cd github-pr-agent
+   ```
+2. **Install dependencies:**
+   ```bash
+   pnpm install
+   ```
+3. **Configure environment:**
+    - Copy `.env.example` to `.env`
+    - Fill in your GitHub token and repo:
+      ```env
+      GITHUB_TOKEN=your_github_token_with_repo_or_issues_scope
+      GITHUB_REPO=owner/repo-name
+      ```
+4. **Start Motia:**
+   ```bash
+   pnpm dev
+   ```
+5. **Try the API!** (see curl commands below)
 
-## Setup
+---
 
-1. Clone the repository:
+## 🛠️ Example API Usage (curl)
+
+### List Open PRs
 ```bash
-git clone https://github.com/swarna1101/github-pr-agent.git
-cd github-pr-agent
+curl http://localhost:3000/list-prs
 ```
 
-2. Install dependencies:
+### Get PR Details
 ```bash
-pnpm install
+curl "http://localhost:3000/get-pr-details?number=123"
 ```
 
-3. Set up environment variables:
-   - Copy `.env.example` to `.env`
-   - Fill in the required environment variables:
-     - `OPENAI_API_KEY`: Your OpenAI API key
-     - `GITHUB_TOKEN`: Your GitHub Personal Access Token
-
-## Usage
-
-The agent can be used in various ways:
-
-1. As a GitHub Action in your workflow
-2. As a local development tool
-3. As an API service
-
-Detailed documentation for each use case will be added soon.
-
-## Development
-
-To start development:
-
-1. Make sure all dependencies are installed
-2. Create a new branch for your feature
-3. Run the development server:
+### Label a PR
 ```bash
-pnpm dev
+curl -X POST http://localhost:3000/label-pr \
+  -H "Content-Type: application/json" \
+  -d '{"number":123,"labels":["triage","needs-review"]}'
 ```
 
-## Contributing
+### Create an Issue
+```bash
+curl -X POST http://localhost:3000/create-issue \
+  -H "Content-Type: application/json" \
+  -d '{"title":"Test Issue from Motia","body":"This issue was created via the Motia API.","labels":["bug"]}'
+```
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+### Close an Issue
+```bash
+curl -X POST http://localhost:3000/close-issue \
+  -H "Content-Type: application/json" \
+  -d '{"number":123}'
+```
 
-## License
+### Update Issue Details
+```bash
+curl -X POST http://localhost:3000/update-issue \
+  -H "Content-Type: application/json" \
+  -d '{"number":2,"body":"This issue was created by Motia.\n\nHere are more details:\n- This is a demo update\n- Motia can automate GitHub\n- You can add more lines\n- Use this for any workflow\n- Enjoy automation!"}'
+```
 
-[MIT License](LICENSE) 
+---
+
+## 📊 Sequence Diagram
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant MotiaAgent
+    participant GitHubAPI
+    User->>MotiaAgent: curl /create-issue
+    MotiaAgent->>GitHubAPI: POST /repos/:repo/issues
+    GitHubAPI-->>MotiaAgent: Issue created
+    MotiaAgent-->>User: Issue details
+    User->>MotiaAgent: curl /label-pr
+    MotiaAgent->>GitHubAPI: POST /repos/:repo/issues/:number/labels
+    GitHubAPI-->>MotiaAgent: Labels updated
+    MotiaAgent-->>User: Labeling result
+    User->>MotiaAgent: curl /close-issue
+    MotiaAgent->>GitHubAPI: PATCH /repos/:repo/issues/:number (state=closed)
+    GitHubAPI-->>MotiaAgent: Issue closed
+    MotiaAgent-->>User: Close result
+```
+
+---
+
+## 🤖 Why Motia?
+
+- **Visual Automation:** Motia lets you visually design, connect, and automate workflows for GitHub and beyond.
+- **Low-Code:** Add new steps and flows with minimal code.
+- **Extensible:** Easily add new endpoints, triggers, and integrations.
+- **Observability:** Built-in logs and state tracking for debugging and auditing.
+- **Fast Prototyping:** Build, test, and iterate on automations in minutes.
+
+Motia is perfect for teams who want to:
+- Automate repetitive GitHub tasks (labeling, triage, notifications)
+- Build custom bots and integrations
+- Prototype workflow automations visually
+
+Learn more: [motia.dev](https://motia.dev)
+
+---
+
+## 🌱 Future Work
+- **Auto-label PRs based on content or author**
+- **PR review assignment automation**
+- **Slack/Discord notifications for PR/issue events**
+- **Scheduled/recurring GitHub actions**
+- **Custom triggers (e.g., on PR opened/closed/merged)**
+- **Integration with CI/CD and other tools**
+- **Webhooks for real-time event handling**
+
+---

@@ -16,20 +16,28 @@ export const config: ApiRouteConfig = {
 };
 
 export const handler: StepHandler<typeof config> = async (_input, { logger }) => {
-  const repo = process.env.GITHUB_REPO;
-  const token = process.env.GITHUB_PAT;
-  if (!repo || !token) {
-    throw new Error('GITHUB_REPO or GITHUB_PAT not set in environment');
+  try {
+    const repo = process.env.GITHUB_REPO;
+    const token = process.env.GITHUB_TOKEN;
+    if (!repo || !token) {
+      throw new Error('GITHUB_REPO or GITHUB_TOKEN not set in environment');
+    }
+    const url = `https://api.github.com/repos/${repo}/pulls`;
+    const response = await axios.get(url, {
+      headers: { Authorization: `token ${token}` },
+    });
+    const prs = response.data;
+    logger.info(`Found ${prs.length} open PRs:`);
+    prs.forEach((pr: any) => logger.info(`- #${pr.number}: ${pr.title}`));
+    return {
+      status: 200,
+      body: { count: prs.length, prs: prs.map((pr: any) => ({ number: pr.number, title: pr.title })) },
+    };
+  } catch (error: any) {
+    logger.error('Error listing PRs:', error?.response?.data || error.message || error);
+    return {
+      status: 500,
+      body: { error: error?.response?.data || error.message || 'Internal server error' },
+    };
   }
-  const url = `https://api.github.com/repos/${repo}/pulls`;
-  const response = await axios.get(url, {
-    headers: { Authorization: `token ${token}` },
-  });
-  const prs = response.data;
-  logger.info(`Found ${prs.length} open PRs:`);
-  prs.forEach((pr: any) => logger.info(`- #${pr.number}: ${pr.title}`));
-  return {
-    status: 200,
-    body: { count: prs.length, prs: prs.map((pr: any) => ({ number: pr.number, title: pr.title })) },
-  };
 };
