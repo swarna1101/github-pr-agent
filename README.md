@@ -100,6 +100,12 @@ sequenceDiagram
     MotiaAgent->>GitHubAPI: POST /repos/:repo/issues/:number/labels
     GitHubAPI-->>MotiaAgent: Labels updated
     MotiaAgent-->>User: Labeling result
+    User->>MotiaAgent: curl /auto-assign-reviewers
+    MotiaAgent->>GitHubAPI: GET /repos/:repo/pulls/:number/files
+    GitHubAPI-->>MotiaAgent: Changed files
+    MotiaAgent->>GitHubAPI: POST /repos/:repo/pulls/:number/requested_reviewers
+    GitHubAPI-->>MotiaAgent: Reviewers assigned
+    MotiaAgent-->>User: Assignment result
     User->>MotiaAgent: curl /close-issue
     MotiaAgent->>GitHubAPI: PATCH /repos/:repo/issues/:number (state=closed)
     GitHubAPI-->>MotiaAgent: Issue closed
