@@ -50,6 +50,18 @@ curl -X POST http://localhost:3000/label-pr \
   -d '{"number":123,"labels":["triage","needs-review"]}'
 ```
 
+### Auto Assign Reviewers
+```bash
+curl -X POST http://localhost:3000/auto-assign-reviewers \
+  -H "Content-Type: application/json" \
+  -d '{"number":123}'
+```
+This endpoint automatically:
+- Assigns @swarna1101 as a reviewer for all PRs
+- Analyzes changed files to identify relevant teams
+- Requests reviews from team members based on file patterns
+- Returns the list of assigned reviewers and teams
+
 ### Create an Issue
 ```bash
 curl -X POST http://localhost:3000/create-issue \

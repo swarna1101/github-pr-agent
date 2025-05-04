@@ -1,8 +1,8 @@
 {
   "default": {
     "steps/api.step.ts": {
-      "x": 0,
-      "y": 10
+      "x": 790,
+      "y": -200
     },
     "steps/noop.step.ts": {
       "x": 404,
@@ -31,6 +31,14 @@
     "steps/close-issue.step.ts": {
       "x": 1827,
       "y": 10
+    },
+    "steps/update-issue.step.ts": {
+      "x": 2218,
+      "y": 0
+    },
+    "steps/auto-assign-reviewers.step.ts": {
+      "x": 2628,
+      "y": 0
     }
   }
 }
