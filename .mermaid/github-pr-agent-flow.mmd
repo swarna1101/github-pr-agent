@@ -1,19 +1,32 @@
 flowchart TD
     classDef apiStyle fill:#f96,stroke:#333,stroke-width:2px,color:#fff
     classDef eventStyle fill:#69f,stroke:#333,stroke-width:2px,color:#fff
-    classDef cronStyle fill:#9c6,stroke:#333,stroke-width:2px,color:#fff
     classDef noopStyle fill:#3f3a50,stroke:#333,stroke-width:2px,color:#fff
-    steps_finance_data_step["⚡ FinanceDataAgent"]:::eventStyle
-    steps_openai_analysis_step["⚡ OpenAIAnalysisHandler"]:::eventStyle
-    steps_query_api_step["🌐 FinanceQueryAPI"]:::apiStyle
-    steps_response_coordinator_step["⚡ ResponseCoordinator"]:::eventStyle
-    steps_result_api_step["🌐 FinanceResultAPI"]:::apiStyle
-    steps_save_result_step["⚡ SaveResultHandler"]:::eventStyle
-    steps_web_search_step["⚡ WebSearchAgent"]:::eventStyle
-    steps_finance_data_step -->|Finance data completed| steps_response_coordinator_step
-    steps_openai_analysis_step -->|Analysis completed| steps_save_result_step
-    steps_query_api_step -->|Query received| steps_finance_data_step
-    steps_query_api_step -->|Query received| steps_web_search_step
-    steps_response_coordinator_step -->|Response completed| steps_openai_analysis_step
-    steps_result_api_step -->|Analysis completed| steps_save_result_step
-    steps_web_search_step -->|Web search completed| steps_response_coordinator_step 
+
+    list_prs_api["🌐 ListPRsAPI"]:::apiStyle
+    get_pr_details_api["🌐 GetPRDetailsAPI"]:::apiStyle
+    label_pr_api["🌐 LabelPRAPI"]:::apiStyle
+    auto_assign_reviewers_api["🌐 AutoAssignReviewersAPI"]:::apiStyle
+    create_issue_api["🌐 CreateIssueAPI"]:::apiStyle
+    close_issue_api["🌐 CloseIssueAPI"]:::apiStyle
+    update_issue_api["🌐 UpdateIssueAPI"]:::apiStyle
+    motia_agent["⚡ MotiaAgent"]:::eventStyle
+    github_api["🌐 GitHubAPI"]:::apiStyle
+
+    list_prs_api -->|Request| motia_agent
+    get_pr_details_api -->|Request| motia_agent
+    label_pr_api -->|Request| motia_agent
+    auto_assign_reviewers_api -->|Request| motia_agent
+    create_issue_api -->|Request| motia_agent
+    close_issue_api -->|Request| motia_agent
+    update_issue_api -->|Request| motia_agent
+
+    motia_agent -->|API call| github_api
+    github_api -->|Response| motia_agent
+    motia_agent -->|Result| list_prs_api
+    motia_agent -->|Result| get_pr_details_api
+    motia_agent -->|Result| label_pr_api
+    motia_agent -->|Result| auto_assign_reviewers_api
+    motia_agent -->|Result| create_issue_api
+    motia_agent -->|Result| close_issue_api
+    motia_agent -->|Result| update_issue_api 
