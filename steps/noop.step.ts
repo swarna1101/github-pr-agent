@@ -5,6 +5,9 @@ export const config: NoopConfig = {
   name: 'Flow Starter',
   description: 'Start the default flow',
   virtualSubscribes: [],
-  virtualEmits: ['/default'],
+  virtualEmits: [{
+    topic: '/triage-pr',
+    label: 'Triage PR',
+  }],
   flows: ['default'],
 } 

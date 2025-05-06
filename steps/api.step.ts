@@ -13,6 +13,7 @@ export const config: ApiRouteConfig = {
   bodySchema: inputSchema,
   flows: ['default'],
   emits: [],
+  virtualSubscribes: ['/triage-pr'],
 };
 
 export const handler: StepHandler<typeof config> = async (_input, { logger }) => {

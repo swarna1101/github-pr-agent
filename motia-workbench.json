@@ -1,48 +1,48 @@
 {
   "default": {
     "steps/api.step.ts": {
-      "x": 790,
-      "y": -200
+      "x": 870,
+      "y": -454
     },
     "steps/noop.step.ts": {
-      "x": 404,
-      "y": 25
+      "x": 563,
+      "y": -141
     },
     "steps/one.step.ts": {
-      "x": 596,
-      "y": 30
+      "x": 936.7351190476192,
+      "y": -70.84672619047619
     },
     "steps/two.step.ts": {
-      "x": 586,
-      "y": 236
+      "x": 683.4047619047618,
+      "y": 404.86458333333337
     },
     "steps/get-pr-details.step.ts": {
-      "x": 845,
-      "y": 0
+      "x": 1147,
+      "y": 352
     },
     "steps/label-pr.step.ts": {
-      "x": 1145,
-      "y": 0
+      "x": 1429,
+      "y": -458
     },
     "steps/create-issue.step.ts": {
-      "x": 1417,
-      "y": 0
+      "x": 2809.78125,
+      "y": -98.07440476190477
     },
     "steps/close-issue.step.ts": {
-      "x": 1827,
-      "y": 10
+      "x": 1815,
+      "y": -450
     },
     "steps/update-issue.step.ts": {
-      "x": 2218,
-      "y": 0
+      "x": 2444.3348214285716,
+      "y": 394.37202380952385
     },
     "steps/auto-assign-reviewers.step.ts": {
-      "x": 2628,
-      "y": 0
+      "x": 2336,
+      "y": -506
     },
     "steps/triage-pr.step.ts": {
-      "x": 3038,
-      "y": 0
+      "x": 1746,
+      "y": 392
     }
   }
 }

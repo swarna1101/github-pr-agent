@@ -40,6 +40,7 @@ export const config: ApiRouteConfig = {
   bodySchema: inputSchema,
   flows: ['default'],
   emits: [],
+  virtualSubscribes: ['/auto-assign-reviewers'],
 };
 
 export const handler: StepHandler<typeof config> = async (input, { logger }) => {

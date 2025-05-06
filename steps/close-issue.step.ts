@@ -15,6 +15,7 @@ export const config: ApiRouteConfig = {
   bodySchema: inputSchema,
   flows: ['default'],
   emits: [],
+  virtualSubscribes: ['/close-issue'],
 };
 
 export const handler: StepHandler<typeof config> = async (input, { logger }) => {

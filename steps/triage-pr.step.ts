@@ -15,9 +15,15 @@ export const config: ApiRouteConfig = {
   bodySchema: inputSchema,
   flows: ['default'],
   emits: [],
+  virtualSubscribes: ['/triage-pr'],
+  virtualEmits: [
+    { topic: '/label-pr', label: 'Label PR' },
+    { topic: '/auto-assign-reviewers', label: 'Auto Assign Reviewers' },
+    { topic: '/comment-pr', label: 'Comment PR' },
+  ],
 };
 
-export const handler: StepHandler<typeof config> = async (input, { logger }) => {
+export const handler: StepHandler<typeof config> = async (input, { logger, emit }) => {
   try {
     const repo = process.env.GITHUB_REPO;
     const token = process.env.GITHUB_TOKEN;
@@ -78,6 +84,11 @@ export const handler: StepHandler<typeof config> = async (input, { logger }) => 
     });
 
     logger.info(`Triage complete for PR #${prNumber}`);
+    // Emit pr_labeled event
+    await emit({
+      topic: 'pr_labeled',
+      data: { number: prNumber, labels },
+    });
     return {
       status: 200,
       body: { message: 'Triage complete', labels },
