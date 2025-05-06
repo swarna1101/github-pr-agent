@@ -83,6 +83,22 @@ curl -X POST http://localhost:3000/update-issue \
   -d '{"number":2,"body":"This issue was created by Motia.\n\nHere are more details:\n- This is a demo update\n- Motia can automate GitHub\n- You can add more lines\n- Use this for any workflow\n- Enjoy automation!"}'
 ```
 
+### Triage PR
+```bash
+curl -X POST http://localhost:3000/triage-pr \
+  -H "Content-Type: application/json" \
+  -d '{"number":123}'
+```
+This endpoint performs smart triage for a PR:
+- Fetches PR details
+- Analyzes the PR content to suggest labels (e.g., bug, feature, needs-review)
+- Auto-labels the PR
+- Auto-assigns reviewers (always includes @mfpiccolo and team-based reviewers)
+- Posts a triage comment on the PR summarizing the actions
+
+**Utility:**
+> Use this endpoint to automate and streamline your PR review process. It connects multiple automation steps into a single, intelligent workflow, making your code review process faster and more consistent.
+
 ---
 
 ## 📊 Sequence Diagram

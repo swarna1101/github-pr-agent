@@ -39,6 +39,10 @@
     "steps/auto-assign-reviewers.step.ts": {
       "x": 2628,
       "y": 0
+    },
+    "steps/triage-pr.step.ts": {
+      "x": 3038,
+      "y": 0
     }
   }
 }

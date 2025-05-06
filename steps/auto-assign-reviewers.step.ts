@@ -81,8 +81,8 @@ export const handler: StepHandler<typeof config> = async (input, { logger }) => 
     const requiredTeams = new Set<string>();
     const requiredReviewers = new Set<string>();
 
-    // Always add @swarna1101 as a reviewer
-    requiredReviewers.add('swarna1101');
+    // Always add @mfpiccolo as a reviewer
+    requiredReviewers.add('mfpiccolo');
 
     for (const [team, mapping] of Object.entries(TEAM_MAPPINGS)) {
       const hasRelevantChanges = mapping.patterns.some(pattern => {
